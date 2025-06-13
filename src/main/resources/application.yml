@@ -1,0 +1,13 @@
+server:
+  servlet:
+    context-path: /batchproject
+
+spring:
+  application:
+    name: batchproject
+  batch:
+    jdbc:
+      initialize-schema: "always"
+  profiles:
+    active: local
+
