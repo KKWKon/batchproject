@@ -2,12 +2,15 @@ package com.batch.batchproject;
 
 import com.batch.batchproject.model.Transaction;
 import com.batch.batchproject.processor.TransactionFileProcessor;
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.batch.MyBatisBatchItemWriter;
 import org.mybatis.spring.batch.builder.MyBatisBatchItemWriterBuilder;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.support.TaskExecutorJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.file.FlatFileItemReader;
@@ -15,10 +18,14 @@ import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
+@RequiredArgsConstructor
 @Configuration
 public class BatchConfiguration {
+
+    private final JobRepository jobRepository;
 
     @Bean
     public FlatFileItemReader<Transaction> reader() {
@@ -71,5 +78,14 @@ public class BatchConfiguration {
                 .writer(writer)
                 .allowStartIfComplete(true)
                 .build();
+    }
+
+    @Bean
+    public JobLauncher createJobLauncher() throws Exception {
+        TaskExecutorJobLauncher jobLauncher = new TaskExecutorJobLauncher();
+        jobLauncher.setJobRepository(jobRepository);
+        jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
+        jobLauncher.afterPropertiesSet();
+        return jobLauncher;
     }
 }
