@@ -20,6 +20,9 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 @Configuration
 public class BatchConfiguration {
 
+//    @Autowired
+//    private JobRepository jobRepository;
+
     @Bean
     public FlatFileItemReader<Transaction> reader() {
         return new FlatFileItemReaderBuilder<Transaction>()
@@ -72,4 +75,13 @@ public class BatchConfiguration {
                 .allowStartIfComplete(true)
                 .build();
     }
+
+//    @Bean
+//    public JobLauncher createJobLauncher() throws Exception {
+//        TaskExecutorJobLauncher jobLauncher = new TaskExecutorJobLauncher();
+//        jobLauncher.setJobRepository(jobRepository);
+//        jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
+//        jobLauncher.afterPropertiesSet();
+//        return jobLauncher;
+//    }
 }
