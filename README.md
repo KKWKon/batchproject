@@ -1,10 +1,10 @@
 ## Documentations
 Documentations are located in [/src/main/resources/Documentation](src/main/resources/Documentation)
 
-**Class Diagram**  
+### Class Diagram  
 ![class diagram](src/main/resources/Documentation/batchproject%20class%20diagram.png)
 
-**Activity Diagram**  
+### Activity Diagram  
 ![activity diagram](src/main/resources/Documentation/batchproject%20activity%20diagram.png)
 
 
