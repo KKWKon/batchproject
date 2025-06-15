@@ -53,8 +53,8 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public Job importUserJob(JobRepository jobRepository, Step step1, JobCompletionNotificationListener listener) {
-        return new JobBuilder("importUserJob", jobRepository)
+    public Job importTransactionJob(JobRepository jobRepository, Step step1, JobCompletionNotificationListener listener) {
+        return new JobBuilder("importTransactionJob", jobRepository)
                 .listener(listener)
                 .start(step1)
                 .build();
